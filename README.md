@@ -21,7 +21,7 @@ Docker - esphome/esphome:dev
 - [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases) - Used to flash initial config to ESP32.  Used this utility on a Mac and it required extra drivers installed for serial to USB. 
 - [Drivers](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) - Installed these drivers to make the Serial port show up when connecting as USB to Mac.
 
-##Project Pictures
+## Project Pictures
 ![UI](images/esphome-1.jpeg?raw=true "Parts")
 ![UI](images/esphome-2.jpeg?raw=true "Programmed")
 ![UI](images/esphome-3.jpeg?raw=true "Installed")
