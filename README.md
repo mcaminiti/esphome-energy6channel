@@ -12,6 +12,8 @@ My process was modified as I run Home Assistant in a container and do not run Ha
 - ESP32-S NodeMCU [Link](https://www.amazon.com/HiLetgo-ESP-WROOM-32-Development-Microcontroller-Integrated/dp/B0718T232Z/ref=as_li_ss_tl)
 - 9VAC Power Supply(THIS IS AC NOT DC) - [Link](https://www.amazon.com/gp/product/B00B886CWS/ref=as_li_ss_tl)
 - CircuitSetup 6 Channel Board - [Link](https://circuitsetup.us/index.php/product/expandable-6-channel-esp32-energy-meter/)
+## Config YAML
+- [energy_6c_1](https://github.com/mcaminiti/esphome-energy6channel/blob/master/energy_6c_1/energy_6c_1.yaml)
 
 ## Docker Information
 Docker - esphome/esphome:dev
