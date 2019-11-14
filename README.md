@@ -21,6 +21,9 @@ Docker - esphome/esphome:dev
 - [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases) - Used to flash initial config to ESP32.  Used this utility on a Mac and it required extra drivers installed for serial to USB. 
 - [Drivers](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) - Installed these drivers to make the Serial port show up when connecting as USB to Mac.
 
+## Calibration
+I used a clamp meter on a custom built cord to allow me to place the CT clamp and the clamp meter on the same device.  I used a 55 W Rough Service Incadescent bulb to tune the Volts by adjusting gain_voltage until it matched my house voltage.  Then changed the gain for the amp readings to match the draw.  I used the web page from the ESP device to view readings of amp/watts while tuning.  Each clamp was calibrated but all in my set were the exact same settings. 
+
 ## Project Pictures
 ![UI](images/esphome-1.jpeg?raw=true "Parts")
 ![UI](images/esphome-2.jpeg?raw=true "Programmed")
