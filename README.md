@@ -22,7 +22,7 @@ Docker - esphome/esphome:dev
 - [Drivers](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) - Installed these drivers to make the Serial port show up when connecting as USB to Mac.
 
 ##Project Pictures
-![UI](images/esphome-1.png?raw=true "Parts")
-![UI](images/esphome-2.png?raw=true "Programmed")
-![UI](images/esphome-3.png?raw=true "Installed")
-
+![UI](images/esphome-1.jpeg?raw=true "Parts")
+![UI](images/esphome-2.jpeg?raw=true "Programmed")
+![UI](images/esphome-3.jpeg?raw=true "Installed")
+![UI](images/ha-1.png?raw=true "Home-Assistant")
