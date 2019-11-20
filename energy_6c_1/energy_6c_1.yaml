@@ -140,6 +140,23 @@ sensor:
     icon: "mdi:flash-circle"
     update_interval: ${update_time}         
 
+  - platform: template
+    name: ${disp_name} Dryer Amps
+    id: dryerAmps
+    lambda: return id(ct5Amps).state + id(ct6Amps).state;
+    accuracy_decimals: 2
+    unit_of_measurement: A
+    icon: "mdi:flash"
+    update_interval: ${update_time}         
+  - platform: template
+    name: ${disp_name} Dryer Watts
+    id: dryerWatts
+    lambda: return id(dryerAmps).state * id(ic2Volts).state;
+    accuracy_decimals: 1
+    unit_of_measurement: W
+    icon: "mdi:flash-circle"
+    update_interval: ${update_time}  
+    
 switch:
   - platform: restart
     name: ${disp_name} Restart  
