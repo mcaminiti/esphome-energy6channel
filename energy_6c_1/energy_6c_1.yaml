@@ -126,7 +126,7 @@ sensor:
   - platform: template
     name: ${disp_name} CT5 Watts
     id: ct5Watts
-    lambda: return id(ct5Amps).state * id(ic1Volts).state;
+    lambda: return id(ct5Amps).state * id(ic2Volts).state;
     accuracy_decimals: 0
     unit_of_measurement: W
     icon: "mdi:flash-circle"
@@ -134,7 +134,7 @@ sensor:
   - platform: template
     name: ${disp_name} CT6 Watts
     id: ct6Watts
-    lambda: return id(ct6Amps).state * id(ic1Volts).state;
+    lambda: return id(ct6Amps).state * id(ic2Volts).state;
     accuracy_decimals: 0
     unit_of_measurement: W
     icon: "mdi:flash-circle"
