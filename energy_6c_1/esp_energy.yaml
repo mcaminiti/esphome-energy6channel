@@ -17,7 +17,7 @@ wifi:
     # Set this to the IP of the ESP
     static_ip: REDACTED
     # Set this to the IP address of the router. Often ends with .1
-    gateway: 192.168.2.1
+    gateway: REDACTED
     # The subnet of the network. 255.255.255.0 works for most home networks.
     subnet: 255.255.255.0  
 
@@ -164,16 +164,18 @@ sensor:
         id: ct7Watts
         accuracy_decimals: 1        
       gain_voltage: 7475
-      gain_ct: 26996
+      gain_ct: 21077
     phase_b:
       current:
         name: ${disp_name} CT8 Panel 2 Main Amps
         id: ct8Amps
       # CT Clamp installed in opposite direction and no room to move.  Using old lambda method to calculate watts
       #power:
-      #  name: ${disp_name} CT8 Watts
-      #  id: ct8Watts          
-      gain_ct: 26422
+        #name: ${disp_name} CT8 Watts
+        #id: ct8WattsTest
+        #filters:
+        #- lambda: return id(ct8WattsTest) * -1.0;
+      gain_ct: 26514
     phase_c:
       current:
         name: ${disp_name} CT9 Red Sea Amps
@@ -182,7 +184,7 @@ sensor:
         name: ${disp_name} CT9 Red Sea Watts
         id: ct9Watts
         accuracy_decimals: 1        
-      gain_ct: 26600
+      gain_ct: 9180
     frequency:
       name: ${disp_name} Freq C
     line_frequency: 60Hz
@@ -205,7 +207,7 @@ sensor:
         id: ct10Watts
         accuracy_decimals: 1
       gain_voltage: 7475
-      gain_ct: 14724
+      gain_ct: 23307
     phase_b:
       current:
         name: ${disp_name} CT11 Panel 1 Main Amps
@@ -214,7 +216,7 @@ sensor:
         name: ${disp_name} CT11 Panel 1 Main Watts
         id: ct11Watts
         accuracy_decimals: 1
-      gain_ct: 23698
+      gain_ct: 17393
     phase_c:
       current:
         name: ${disp_name} CT12 Basement Freezer Amps
