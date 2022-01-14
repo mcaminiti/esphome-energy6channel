@@ -1,0 +1,332 @@
+substitutions:
+# Change the disp_name to something you want
+  disp_name: esp_energy
+# Interval of how often the power is updated
+  update_time: 10s
+
+esphome:
+  name: esp_energy
+  platform: ESP32
+  board: nodemcu-32s
+
+wifi:
+  ssid: "REDACTED"
+  password: "REDACTED"
+
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: REDACTED
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: REDACTED
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0  
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+web_server:
+  port: 80
+
+spi:
+  clk_pin: 18
+  miso_pin: 19
+  mosi_pin: 23
+
+
+
+
+
+#Ct  1 - Panel 2 - lift station 
+#Ct  2 - Panel 2 - aerator 
+#Ct  3 - Panel 1 - kitchen fridge - black
+#Ct  4 - Panel 2 - Tesla red
+#Ct  5 - Panel 1 - dryer half - red
+#Ct  6 - Panel 2 - Tesla black
+#Ct  7 - Panel 2 - black
+#Ct  8 - Panel 2 - red (need to invert)
+#Ct  9 - Panel 2 - Red Sea
+#Ct 10 - Panel 1 - Main -  black
+#Ct 11 - Panel 1 - Main -  red
+#Ct 12 - Panel 2 - basement freezer
+
+
+sensor:
+  - platform: wifi_signal
+    name: ${disp_name} WiFi
+    update_interval: 60s  
+## Main Board 1
+  - platform: atm90e32
+    cs_pin: 5
+    phase_a:
+      voltage:
+        name: ${disp_name} Volts A
+        id: ic1Volts
+        accuracy_decimals: 1
+#        filters:
+#          - multiply: 2.0
+      current:
+        name: ${disp_name} CT1 Lift Station Amps
+        id: ct1Amps
+# The max value for current that the meter can output is 65.535. If you expect to measure current over 65A,
+# divide the gain_ct by 2 (120A CT) or 4 (200A CT) and multiply the current and power values by 2 or 4 by uncommenting the filter below
+#        filters:
+#          - multiply: 2
+      power:
+        name: ${disp_name} CT1 Lift Station Watts
+        id: ct1Watts
+        accuracy_decimals: 1
+      gain_voltage: 7475
+# Voltage using a 9VAC power transformer
+# Note: If you can not get the voltage correct with the highest gain of 65535, uncomment the 2.0 multiply filter above and lower the gain as needed
+#      gain_ct: 15420
+      gain_ct: 26600
+    phase_b:
+      current:
+        name: ${disp_name} CT2 Aerator Amps
+        id: ct2Amps
+      power:
+        name: ${disp_name} CT2 Aerator Watts
+        id: ct2Watts 
+        accuracy_decimals: 1
+      gain_ct: 23644
+    phase_c:
+      current:
+        name: ${disp_name} CT3 Kitchen Refrigerator Amps
+        id: ct3Amps
+      power:
+        name: ${disp_name} CT3 Kitchen Refrigerator Watts
+        id: ct3Watts
+        accuracy_decimals: 1        
+      gain_ct: 14546
+    frequency:
+      name: ${disp_name} Freq A
+    line_frequency: 60Hz
+    gain_pga: 1X
+    update_interval: ${update_time}
+## Main board 2
+  - platform: atm90e32
+    cs_pin: 4
+    phase_a:
+      voltage:
+        name: ${disp_name} Volts B
+        id: ic2Volts
+        accuracy_decimals: 1
+      current:
+        name: ${disp_name} CT4 Tesla Charger Amps
+        id: ct4Amps
+      power:
+        name: ${disp_name} CT4 Tesla Charger Watts
+        id: ct4Watts
+        accuracy_decimals: 1        
+      gain_voltage: 7475
+      gain_ct: 28422
+    phase_b:
+      current:
+        name: ${disp_name} CT5 Dryer Amps
+        id: ct5Amps
+      power:
+        name: ${disp_name} CT5 Dryer Watts
+        id: ct5Watts
+        accuracy_decimals: 1        
+      gain_ct: 27173
+    phase_c:
+      current:
+        name: ${disp_name} CT6 Tesla Charger Amps
+        id: ct6Amps
+      power:
+        name: ${disp_name} CT6 Tesla Charger Watts
+        id: ct6Watts
+        accuracy_decimals: 1        
+      gain_ct: 27843
+    frequency:
+      name: ${disp_name} Freq B
+    line_frequency: 60Hz
+    gain_pga: 1X
+    update_interval: ${update_time}
+## Expansion Board 1
+  - platform: atm90e32
+    cs_pin: 0
+    phase_a:
+      voltage:
+        name: ${disp_name} Volts C
+        id: ic3Volts
+        accuracy_decimals: 1
+      current:
+        name: ${disp_name} CT7 Panel 2 Main Amps
+        id: ct7Amps
+      power:
+        name: ${disp_name} CT7 Panel 2 Main Watts
+        id: ct7Watts
+        accuracy_decimals: 1        
+      gain_voltage: 7475
+      gain_ct: 21077
+    phase_b:
+      current:
+        name: ${disp_name} CT8 Panel 2 Main Amps
+        id: ct8Amps
+      # CT Clamp installed in opposite direction and no room to move.  Using old lambda method to calculate watts
+      #power:
+        #name: ${disp_name} CT8 Watts
+        #id: ct8WattsTest
+        #filters:
+        #- lambda: return id(ct8WattsTest) * -1.0;
+      gain_ct: 26514
+    phase_c:
+      current:
+        name: ${disp_name} CT9 Red Sea Amps
+        id: ct9Amps
+      power:
+        name: ${disp_name} CT9 Red Sea Watts
+        id: ct9Watts
+        accuracy_decimals: 1        
+      gain_ct: 9180
+    frequency:
+      name: ${disp_name} Freq C
+    line_frequency: 60Hz
+    gain_pga: 1X
+    update_interval: ${update_time}
+
+## Expansion Board 2
+  - platform: atm90e32
+    cs_pin: 16
+    phase_a:
+      voltage:
+        name: ${disp_name} Volts D
+        id: ic4Volts
+        accuracy_decimals: 1
+      current:
+        name: ${disp_name} CT10 Panel 1 Main Amps
+        id: ct10Amps
+      power:
+        name: ${disp_name} CT10 Panel 1 Main Watts
+        id: ct10Watts
+        accuracy_decimals: 1
+      gain_voltage: 7475
+      gain_ct: 23307
+    phase_b:
+      current:
+        name: ${disp_name} CT11 Panel 1 Main Amps
+        id: ct11Amps
+      power:
+        name: ${disp_name} CT11 Panel 1 Main Watts
+        id: ct11Watts
+        accuracy_decimals: 1
+      gain_ct: 17393
+    phase_c:
+      current:
+        name: ${disp_name} CT12 Basement Freezer Amps
+        id: ct12Amps
+      power:
+        name: ${disp_name} CT12 Basement Freezer Watts
+        id: ct12Watts
+        accuracy_decimals: 1
+      gain_ct: 7418
+    frequency:
+      name: ${disp_name} Freq D
+    line_frequency: 60Hz
+    gain_pga: 1X
+    update_interval: ${update_time}
+    
+  - platform: template
+    name: ${disp_name} CT8 Panel 2 Main Watts
+    id: ct8Watts
+    lambda: return id(ct8Amps).state * id(ic3Volts).state;
+    accuracy_decimals: 1
+    unit_of_measurement: W
+    icon: "mdi:flash-circle"
+    update_interval: ${update_time} 
+
+## Dryer Calculation
+  - platform: template
+    name: ${disp_name} Dryer Amps
+    id: dryerAmps
+    lambda: return id(ct5Amps).state * 2;
+    accuracy_decimals: 2
+    unit_of_measurement: A
+    icon: "mdi:flash"
+    update_interval: ${update_time}
+    
+  - platform: template
+    name: ${disp_name} Dryer Watts
+    id: dryerWatts
+    lambda: return id(dryerAmps).state * id(ic2Volts).state;
+    accuracy_decimals: 1
+    unit_of_measurement: W
+    icon: "mdi:flash-circle"
+    update_interval: ${update_time}
+
+#Total Tesla Amps
+  - platform: template
+    name: ${disp_name} Tesla Total Amps
+    id: teslaAmps
+    lambda: return id(ct4Amps).state + id(ct6Amps).state ;
+    accuracy_decimals: 2
+    unit_of_measurement: A
+    icon: "mdi:flash"
+    update_interval: ${update_time}
+#Total Tesla Watts
+  - platform: template
+    name: ${disp_name} Tesla Total Watts
+    id: teslaWatts
+    lambda: return id(ct4Watts).state + id(ct6Watts).state ;
+    accuracy_decimals: 0
+    unit_of_measurement: W
+    icon: "mdi:flash-circle"
+    update_interval: ${update_time}
+
+#Total Amps   
+  - platform: template
+    name: ${disp_name} Total Amps
+    id: totalAmps
+    lambda: return id(ct7Amps).state + id(ct8Amps).state + id(ct10Amps).state + id(ct11Amps).state ;
+    accuracy_decimals: 2
+    unit_of_measurement: A
+    icon: "mdi:flash"
+    update_interval: ${update_time}
+#Total Watts
+  - platform: template
+    name: ${disp_name} Total Watts
+    id: totalWatts
+    lambda: return id(ct7Watts).state + id(ct8Watts).state + id(ct10Watts).state + id(ct11Watts).state ;
+    accuracy_decimals: 0
+    unit_of_measurement: W
+    icon: "mdi:flash-circle"
+    update_interval: ${update_time}
+#kWh
+  - platform: total_daily_energy
+    name: ${disp_name} Total kWh
+    power_id: totalWatts
+    filters:
+      - multiply: 0.001
+    unit_of_measurement: kWh
+    state_class: measurement
+    
+#Tesla kWh
+  - platform: total_daily_energy
+    name: ${disp_name} Tesla Total kWh
+    power_id: teslaWatts
+    filters:
+      - multiply: 0.001
+    unit_of_measurement: kWh
+    state_class: measurement
+
+#Dryer kWh
+  - platform: total_daily_energy
+    name: ${disp_name} Dryer Total kWh
+    power_id: dryerWatts
+    filters:
+      - multiply: 0.001
+    unit_of_measurement: kWh
+    state_class: measurement
+
+switch:
+  - platform: restart
+    name: ${disp_name} Restart
+time:
+  - platform: sntp
+    id: sntp_time
